@@ -48,8 +48,8 @@ class Board extends React.Component {
                 FirstUser: 'X',
                 SecondUser: 'O',  // 棋手填入棋盘的数据
             }),
-            role: null,
-            firstRole: null,
+            role: '',
+            firstRole: '',
             lock: false
         }
     }
@@ -85,8 +85,7 @@ class Board extends React.Component {
         }
 
         if (this.calculateWinner(this.state.squares, mIndex, nIndex, userFlag)) {
-            alert(`Game Over!
-${userFlag}赢了！！！`);
+            this.gameOver(userFlag)
         }
     }
 
@@ -95,8 +94,13 @@ ${userFlag}赢了！！！`);
         console.log('check-win')
         return win.checkWin(qArray, mIndex, nIndex, userFlag)
     }
+    // 游戏结束
+    gameOver(userFlag) {
+        console.log(`${userFlag}获得胜利`)
+    }
 
 
+    // 行数
     renderSquare(arr_M_N) {
         // 棋盘数据第一层【横向】
         if (arr_M_N instanceof Array) {
@@ -105,7 +109,7 @@ ${userFlag}赢了！！！`);
             return <div>...</div>
         }
     }
-
+    // 每行数据
     checkerboard(arr_N, mIndex) {
         if (arr_N instanceof Array) {
             return arr_N.map((nItem, nIndex) => <Square index={`${mIndex}-${nIndex}`} key={`${mIndex}-${nIndex}`} value={nItem} onMove={() => this.handleClick(mIndex, nIndex)} />);
